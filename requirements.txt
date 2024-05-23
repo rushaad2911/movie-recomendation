@@ -2,5 +2,5 @@ thefuzz
 streamlit
 requests
 pandas==1.3.3
-numpy
 pickle
+nltk
