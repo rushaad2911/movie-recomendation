@@ -26,7 +26,7 @@ def recommend(movie):
     movie_list = sorted(list(enumerate(dist)),reverse=True,key=lambda x:x[1])[1:13]
     cols = stm.columns(len(movie_list)//2)
 
-    l1,l2 = movie_list[:6],movie_list[7:]
+    l1,l2 = movie_list[:6],movie_list[6:]
     
     for j in [l1,l2]:
         for col,i in zip(cols,j):
@@ -35,9 +35,13 @@ def recommend(movie):
             movie_img = movie.replace(" ","%")
             movie_img = requests.get(f"https://www.omdbapi.com/?apikey=2392103&t={movie}")
             poster = json.loads(movie_img.text)
-            col.image(poster['Poster'],width=150)
             
-            col.text(movie)
+            if "Poster" in poster:
+                col.image(poster['Poster'],width=150)
+                col.text(movie)
+            # else:
+            #     col.image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.electiondataservices.com%2Fproduct%2F1996-election-results-poster-flat%2F&psig=AOvVaw1hGlJFDciDZR-TCtx6pMB-&ust=1716534961964000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNjy5Jydo4YDFQAAAAAdAAAAABAE",width=150)
+            
             
             
             
@@ -57,8 +61,9 @@ if stm.button("Recomend") and name != "":
     else:
         
     
+        stm.write(f'"{name}"  Not Known')
         movie = process.extract(name,data['title'],limit=1)
-        stm.write(f"Did you mean: {movie[0][0]}")
+        stm.write(f"Did you mean:   {movie[0][0]}")
         recommend(movie[0][0])
             
 else:
