@@ -1,1 +1,4 @@
 thefuzz
+streamlit
+requests
+pandas
