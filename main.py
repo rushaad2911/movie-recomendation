@@ -14,8 +14,11 @@ stm.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-data = pk.load(open("/mount/src/movie-recomendation/data.pickle","rb"))
-similarity = pk.load(open("/mount/src/movie-recomendation/similarity.pickle","rb"))
+data = pk.load(open("movie-recomendation/data.pickle","rb"))
+similarity = pk.load(open("movie-recomendation/similarity.pickle","rb"))
+
+if data is None or similarity is None:
+    stm.stop()
 
 def recommend(movie):
     stm.write(f'Movies similar to "{movie}"')
